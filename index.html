@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Giphy API</title>
+</head>
+
+<body>
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+<button data-search="cat">cat</button>
+<button data-search= "dog">dog</button>
+<button data-search= "rooster">rooster</button>
+<button data-search= "horse">horse</button>
+
+<br>
+
+ <form id="animal-form">
+      <label for="animal-input">Add an Animal </label>
+      <input type="text" id="animal-input"><br>
+
+      <!-- Button triggers new animal to be added -->
+      <input id="add-animal" type="submit" value="submit">
+    </form>
+
+<div id="gifs"></div>
+
+  <script type="text/javascript">
+
+  $("button").on('click',function(){
+    var x = $(this).data("search");
+
+    var queryURL = "http://api.giphy.com/v1/gifs/search?q="+ x +"&api_key=dc6zaTOxFJmzC&limit=10";
+    console.log(queryURL);
+
+    $.ajax({
+      url: queryURL,
+      method: 'GET'})
+    .done(function(response) {
+      console.log(response);
+
+      for (var i=0; i<response.data.length; i++){
+          $("#gifs").prepend("<p>Rating:"+response.data[i].rating +"</p>");
+          $("#gifs").prepend("<img src='"+response.data[i].images.fixed_height.url+"'>");
+      }
+    
+  })
+
+});
+
+
+
+  </script>
+
+</body>
+
+</html>
